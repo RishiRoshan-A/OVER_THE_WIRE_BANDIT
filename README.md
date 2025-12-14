@@ -5,6 +5,7 @@ Write-ups and solutions for OverTheWire Bandit wargame, focusing on Linux fundam
 In This Level We need to connect remotely to their server using their given credentials by ssh 
 
 command : ssh bandit0@bandit.labs.overthewire.org -p 2220
+
 -----------------------------------------------------------------------------------------------------------------------------------------------
 # LEVEL 0 --> LEVEL 1:
 
@@ -15,6 +16,7 @@ there is a file called readme (which contains password for the next level ) to r
 command : cat readme 
 
 flag : ZjLjTmM6FvvyRnrb2rfNWOZOTa6ip5If
+
 ------------------------------------------------------------------------------------------------------------------------------------------------
 # LEVEL 1 --> LEVEL 2:
 
@@ -31,6 +33,7 @@ in this if we give ls their is a file named - lets see how we can read a file wi
 - --> file name
 
 flag : 263JGJPfgU6LtdEvgfWU1XP5yac29mFx
+
 ------------------------------------------------------------------------------------------------------------------------------------------------
 # LEVEL 2 --> LEVEL 3 :
 
@@ -52,6 +55,7 @@ to read this file  commad : cat ./--spaces in this filename--
 --spaces in this filename--  --> file_name
 
 flag: MNk8KNH3Usiio41PRUEoDFPqfxLPlSmx
+
 ------------------------------------------------------------------------------------------------------------------------------------------------
 # LEVEL 3 --> LEVEL 4:
 
@@ -68,6 +72,7 @@ go to inhere folder and command : ls -la to list the hidden files  and to read t
 command: cat ...Hiding-From-You
 
 flag : 2WmrDFRmJIq3IPxneAaMGhap0pFhF3NJ
+
 ------------------------------------------------------------------------------------------------------------------------------------------------
 # LEVEL 4 --> LEVEL 5 : 
 
@@ -104,6 +109,7 @@ therefore ./-file07 is a human readable file
 command : cat ./-file07 
 
 flag : 4oQYVPkxZOOEOO5pTW81FB8j8lxXGUQw
+
 ------------------------------------------------------------------------------------------------------------------------------------------------
 
 # LEVEL 5 --> LEVEL 6 :
@@ -188,6 +194,59 @@ sort will arrange the file in alpahbetical order and uniq will remove the duplic
 flag : 4CKMh1JI91bUIZZPXDqGanal4xvAg0JM
 
 ------------------------------------------------------------------------------------------------
+
+# LEVEL 9 --> LEVEL 10 : 
+
+The password for the next level is stored in the file data.txt in one of the few human-readable strings, preceded by several ‘=’ characters.
+
+command : ssh bandit9@bandit.labs.overthewire.org -p 2220
+
+use the previous flag as password to login
+
+since the data.txt is in a non human format we use strings to convert it into human readable format and grep =  to find the flag
+
+command : strings data.txt | grep =
+
+flag : FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey
+
+------------------------------------------------------------------------------------------------
+
+# LEVEL 10 --> LEVEL 11 
+
+The password for the next level is stored in the file data.txt, which contains base64 encoded data
+
+command : ssh bandit10@bandit.labs.overthewire.org -p 2220
+
+use the previous flag as password to login
+
+When we cat the data.txt it is in the base64 encoded format : VGhlIHBhc3N3b3JkIGlzIGR0UjE3M2ZaS2IwUlJzREZTR3NnMlJXbnBOVmozcVJyCg==
+
+we want to decode this to find the flag 
+
+command : cat data.txt | base64 -d
+
+flag : dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr
+
+------------------------------------------------------------------------------------------------
+
+# LEVEL 11 --> LEVEL 12
+
+The password for the next level is stored in the file data.txt, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions
+
+command : ssh bandit11@bandit.labs.overthewire.org -p 2220
+
+use the previous flag as password to login
+
+cat data.txt to see the contents inside the file : Gur cnffjbeq vf 7k16JArUVv5LxVuJfsSVdbbtaHGlw9D4   , looks like it is encoded with rot13 lets decode it 
+
+use online rot13 decoder to find the flag
+
+flag : 7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4
+
+------------------------------------------------------------------------------------------------
+
+
+
 
 
 
