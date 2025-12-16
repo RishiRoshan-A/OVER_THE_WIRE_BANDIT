@@ -245,7 +245,29 @@ flag : 7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4
 
 ------------------------------------------------------------------------------------------------
 
+# LEVEL 12 --> LEVEL 13 
 
+The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed. For this level it may be useful to create a directory under /tmp in which you can work. Use mkdir with a hard to guess directory name. Or better, use the command “mktemp -d”. Then copy the datafile using cp, and rename it using mv (read the manpages!)
+
+command :  ssh bandit12@bandit.labs.overthewire.org -p 2220
+
+use the previous flag as password to login
+
+In this challenge move the file to temp directory in order to edit or modify the file 
+
+change the file hexadump to original file command : xxd -r data.txt > data.bin
+
+using file command check the file type if it is showing zip file command : gunzip file_name
+
+else showing Bzip2 file command : bunzip2 file_name
+
+else showing archive file command : tar -xf file_name
+
+first rename the file to correct extension and then apply the above commands repeatdely until you find ASCII text file 
+
+flag : FO5dwFsc0cbaIiH0h8J2eUks2vdTDwA
+
+------------------------------------------------------------------------------------------------
 
 
 
