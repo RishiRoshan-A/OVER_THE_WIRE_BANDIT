@@ -265,10 +265,142 @@ else showing archive file command : tar -xf file_name
 
 first rename the file to correct extension and then apply the above commands repeatdely until you find ASCII text file 
 
-flag : FO5dwFsc0cbaIiH0h8J2eUks2vdTDwA
-
+flag : FO5dwFsc0cbaIiH0h8J2eUks2vdTDwAn
 ------------------------------------------------------------------------------------------------
 
+# LEVEL 13 --> LEVEL 14
+
+Level Goal
+
+The password for the next level is stored in /etc/bandit_pass/bandit14 and can only be read by user bandit14. For this level, you don’t get the next password, but you get a private SSH key that can be used to log into the next level. Look at the commands that logged you into previous bandit levels, and find out how to use the key for this level.
+
+Command to login : ssh bandit13@bandit.labs.overthewire.org -p 2220
+
+Command : ls --> to see the list of files 
+
+We can see a file named sshkey.private with this we can login into level 14 
+
+use command : scp -P 2220 bandit13@bandit.labs.overthewire.org:sshkey.private . 
+
+to get the key to our system
+
+Command : chmod 600 sshkey.private
+
+Command :  ssh -i sshkey.private -p 2220 bandit14@bandit.labs.overthewire.org
+
+Command : cat /etc/bandit_pass/bandit14  to see the flag
+
+Flag : MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS
+
+-------------------------------------------------------------------------------------------------------------
+
+# LEVEL 14 --> LEVEL 15 
+
+The password for the next level can be retrieved by submitting the password of the current level to port 30000 on localhost.
+
+Use telnet to connect to port 30000 on localhost 
+
+command : telnet localhost 30000
+
+enter the previous flag and we got the flag
+
+Flag : 8xCjnmgoKbGLhHFAZlGE5Tmu4M2tKJQo
+
+-------------------------------------------------------------------------------------------------------------
+
+# LEVEL 15 --> LEVEL 16
+
+The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
+
+Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage
+
+commad to login : ssh bandit15@bandit.labs.overthewire.org -p 2220
+
+use the previous flag as password
+
+use command : openssl s_client -connect localhost:30001 -ign_eof
+
+openssl is a tool which is used for secured communication
+
+s_client --> secure client means use ssl encryption 
+
+-connect --> conecting to the localhost on port 30001
+
+-ign_eof --> dont stop the connection even if i hit enter or stop typing 
+
+run this command and enter the previous flag and we will get the password
+
+flag : kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx
+
+-------------------------------------------------------------------------------------------------------------
+
+# LEVEL 16 --> LEVEL 17 
+
+The credentials for the next level can be retrieved by submitting the password of the current level to a port on localhost in the range 31000 to 32000. First find out which of these ports have a server listening on them. Then find out which of those speak SSL/TLS and which don’t. There is only 1 server that will give the next credentials, the others will simply send back to you whatever you send to it.
+
+Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+
+command to login : ssh bandit16@bandit.labs.overthewire.org -p 2220
+
+enter the previous flag as password
+
+Lets perform an nmap scan to find which ports are giving us a response
+
+command : nmap -A localhost -p 31000-32000
+
+we found that port 31790 , gave an output that Wrong! Please enter the correct current password
+
+Lets connect to that port using openssl
+
+command : openssl s_client -connect localhost:31790 -ign_eof
+
+execute the command and enter the previous flag  
+
+and we have got a rsa key , copy the key and store it in a file to login into next level 
+
+-------------------------------------------------------------------------------------------------------------
+
+# LEVEL 17 --> LEVEL 18
+
+There are 2 files in the homedirectory: passwords.old and passwords.new. The password for the next level is in passwords.new and is the only line that has been changed between passwords.old and passwords.new
+
+NOTE: if you have solved this level and see ‘Byebye!’ when trying to log into bandit18, this is related to the next level, bandit19
+
+command to login : ssh bandit17@bandit.labs.overthewire.org -p 2220 -i bandit17  
+
+now if we give command ls , we can see two files 1) passwords.old 2) passwords.new and we have to find the line that has been changed between passwords.old and passwords.new
+
+so we can use diff command to find it
+
+command : diff passwords.old passwords.new
+
+flag : x2gLTTjFwMOhQ8oWNbMN362QKxfRqGlO
+
+-------------------------------------------------------------------------------------------------------------
+
+# LEVEL 18 --> LEVEL 19
+
+The password for the next level is stored in a file readme in the homedirectory. Unfortunately, someone has modified .bashrc to log you out when you log in with SSH.
+
+In this challenge we cant normally login into ssh since someone has modified .bashrc to log you out when you log in with SSH.
+
+command : ssh -T bandit18@bandit.labs.overthewire.org -p 2220 
+
+and enter the previous flag as the password 
+
+-T --> tells dont spawn a interactive terminal , then .bashrc does not executes but we keeps logined in and we dont get a interactive shell
+
+type command : ls
+
+there is a file called readme , lets cat this file
+
+command : cat readme
+
+flag : cGWpMaKXVwDUNgPAVJbWYuGHVn9zl3j8
+
+-------------------------------------------------------------------------------------------------------------
+
+# LEVEL 19 --> LEVEL 20
 
 
 
