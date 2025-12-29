@@ -722,7 +722,9 @@ and enter the previous flag as the password
 lets create a new directory and clone the git repo
 
 bandit29@bandit:~$ cd /tmp/rishi
-bandit29@bandit:/tmp/rishi$ git clone ssh://bandit29-git@localhost/home/bandit29-git/repo
+
+bandit29@bandit:/tmp/rishi$ git clone git clone ssh://bandit29git@bandit.labs.overthewire.org:2220/home/bandit29-git/repo
+
 Cloning into 'repo'...
 
  lets type ls to check the contents and then found a directory named repo.
@@ -736,6 +738,7 @@ we used the git log command to check the commit history of the file, but we coul
 so lets try for git branches
 
 bandit29@bandit:/tmp/rishi$ git branch -r 
+
   origin/HEAD -> origin/master
   origin/dev
   origin/master
@@ -744,14 +747,18 @@ bandit29@bandit:/tmp/rishi$ git branch -r
 lets checkout dev
 
 bandit29@bandit:/tmp/rishi$ git checkout dev
+
 Branch dev set up to track remote branch dev from origin.
 Switched to a new branch 'dev'
 
 now lets check our README.md file
 
 bandit29@bandit:/tmp/rishi$ ls
+
 code  README.md
+
 bandit29@bandit:/tmp/rishi$ cat README.md
+
 # Bandit Notes
 Some notes for bandit30 of bandit.
 
@@ -763,5 +770,124 @@ Some notes for bandit30 of bandit.
 flag : qp30ex3VLz5MDG1n91YowTv4Q8l7CDZL
 
 ------------------------------------------------------------------------------------------------------------
+
+# LEVEL 30 --> LEVEL 31
+
+There is a git repository at ssh://bandit30-git@bandit.labs.overthewire.org/home/bandit30-git/repo via the port 2220. The password for the user bandit30-git is the same as for the user bandit30.
+
+Clone the repository and find the password for the next level.
+
+command to login : ssh  bandit30@bandit.labs.overthewire.org -p 2220 
+
+Lets make a new directory under tep folder and lets clone the repo
+
+and enter the previous flag as the password 
+
+bandit30@bandit:~$ cd /tmp/rishi1
+
+bandit30@bandit:/tmp/rishi1$ git clone git clone ssh://bandit30git@bandit.labs.overthewire.org:2220/home/bandit30-git/repo
+
+bandit30@bandit:/tmp/rishi1$ cd repo/
+
+when we type ls , there is a  file README.md which is a empty file 
+
+lets try git tag command 
+
+bandit30@bandit:/tmp/rishi1/repo$ git tag
+
+secret
+
+bandit30@bandit:/tmp/rishi1/repo$ git show secret
+
+flag : OoffzGDlzhAlerFJ2cAiz1D41JW1Mhmt
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+# LEVEL 31 --> LEVEL 32
+
+There is a git repository at ssh://bandit31-git@bandit.labs.overthewire.org/home/bandit31-git/repo via the port 2220. The password for the user bandit31-git is the same as for the user bandit31.
+
+Clone the repository and find the password for the next level.
+
+command to login : ssh  bandit30@bandit.labs.overthewire.org -p 2220 
+
+and enter the previous flag as the password 
+
+Lets make a new directory under tep folder and lets clone the repo
+
+and enter the previous flag as the password 
+
+bandit31@bandit:~$ cd /tmp/rishi2
+
+bandit31@bandit:/tmp/rishi2$ git clone git clone ssh://bandit31git@bandit.labs.overthewire.org:2220/home/bandit31-git/repo
+
+bandit31@bandit:/tmp/rishi2$ cd repo/
+
+lets read the file README.md
+
+bandit31@bandit:/tmp/rishi2/repo$ cat README.md
+
+This time your task is to push a file to the remote repository.
+
+Details:
+    File name: key.txt
+    Content: 'May I come in?'
+    Branch: master
+
+Now this time looking in commits, branches and tags nothing found. So, we need to push only. So, what we need to do is make a file named key.txt with content May I come in?. Keep it exactly same. Now we need to add this file as part of the repository.
+
+bandit31@bandit:/tmp/rishi2/repo$ git add key.txt 
+
+bandit31@bandit:/tmp/rishi2/repo$ git commit -m key.txt
+
+So after adding we now need to commit the changes.
+
+bandit31@bandit:/tmp/rishi2/repo$ git push
+
+now we can view the flag 
+
+flag : rmCBvG56y58BXzv98yZGd07ATVL5dW8y
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+# LEVEL 32 --> LEVEL 33
+
+After all this git stuff, it’s time for another escape. Good luck!
+
+command to login : ssh  bandit30@bandit.labs.overthewire.org -p 2220 
+
+and enter the previous flag as the password 
+
+WELCOME TO THE UPPERCASE SHELL
+
+>> ls
+
+sh: 1: LS: not found
+
+>> $0
+
+$ ls -l
+
+total 8
+
+-rwsr-x--- 1 bandit33 bandit32 7556 May  7  2020 uppershell
+
+$ whoami
+
+bandit33
+
+lets cat the /etc/bandit_pass/bandit33 file
+
+flag : odHo63fHiFqcWWJG9rLiLDtPm45KzUKy
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+# LEVEL 33 --> LEVEL 34
+
+At this moment, level 34 does not exist yet.
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
 
 
