@@ -402,7 +402,137 @@ flag : cGWpMaKXVwDUNgPAVJbWYuGHVn9zl3j8
 
 # LEVEL 19 --> LEVEL 20
 
+To gain access to the next level, you should use the setuid binary in the homedirectory. Execute it without arguments to find out how to use it. The password for this level can be found in the usual place (/etc/bandit_pass), after you have used the setuid binary.
 
+command : ssh  bandit19@bandit.labs.overthewire.org -p 2220 
+
+and enter the previous flag as the password 
+
+if we type ls we see a file called bandit20-do
+
+lets execute it command : ./bandit20-do
+
+bandit19@bandit:~$ ./bandit20-do 
+Run a command as another user.
+  Example: ./bandit20-do whoami
+
+  so using this we can read /etc/bandit_pass
+
+  command :  ./bandit20-do cat /etc/bandit_pass/bandit20
+
+now we got the flag
+
+flag : 0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
+
+-------------------------------------------------------------------------------------------------------------
+
+# LEVEL 20 --> LEVEL 21
+
+There is a setuid binary in the homedirectory that does the following: it makes a connection to localhost on the port you specify as a commandline argument. It then reads a line of text from the connection and compares it to the password in the previous level (bandit20). If the password is correct, it will transmit the password for the next level (bandit21).
+
+NOTE: Try connecting to your own network daemon to see if it works as you think
+
+command to login : ssh  bandit20@bandit.labs.overthewire.org -p 2220 
+
+and enter the previous flag as the password 
+
+
+bandit20@bandit:~$ ls
+suconnect
+bandit20@bandit:~$ ./suconnect
+Usage: ./suconnect <portnumber>
+This program will connect to the given port on localhost using TCP. If it receives the correct password from the other side, the next password is transmitted back.
+bandit20@bandit:~$ 
+
+ Lets open a another terminal emulator and logged into the bandit20 account again.
+In the second terminal, lets run nc -nlvp 12345 and enter current level's password when prompted.
+The -nlvp option is a combination of four options: -n means "Do not resolce DNS, -l put Netcat in listen mode, -v enables verbose ouput, and -p specifies the port number.
+
+Now lets run ./suconnect 12345
+
+bandit20@bandit:~$ ./suconnect 12345
+Read: 0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
+Password matches, sending next password
+
+Flag : EeoULMCra2q0dSkYj561DX7s1CpBuOBt
+
+-------------------------------------------------------------------------------------------------------------
+
+# LEVEL 21 --> LEVEL 22
+
+A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+
+command to login : ssh  bandit21@bandit.labs.overthewire.org -p 2220 
+
+and enter the previous flag as the password 
+
+First we are reading the /etc/cron.d file in which 
+
+bandit21@bandit:/$ cat /etc/cron.d/cronjob_bandit22
+@reboot bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+
+we got an another file , lets cat that and we got an another file which contains the flag 
+
+bandit21@bandit:/$ cat /usr/bin/cronjob_bandit22.sh
+#!/bin/bash
+chmod 644 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+bandit21@bandit:/$ cat  /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+tRae0UfB9v0UzbCdn9cY0gQnds9GF58Q
+
+flag : tRae0UfB9v0UzbCdn9cY0gQnds9GF58Q
+
+-------------------------------------------------------------------------------------------------------------
+
+# LEVEL 22 --> LEVEL 23 
+
+A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+NOTE: Looking at shell scripts written by other people is a very useful skill. The script for this level is intentionally made easy to read. If you are having problems understanding what it does, try executing it to see the debug information it prints.
+
+command to login : ssh  bandit21@bandit.labs.overthewire.org -p 2220 
+
+and enter the previous flag as the password 
+
+lets read the file /etc/cron.d similar where it shows another script , lets cat that and we got a script 
+
+lets create a folder in tmp and make a file in it and copy the script to it 
+
+bandit22@bandit:~$ cat  /usr/bin/cronjob_bandit23.sh
+#!/bin/bash
+
+myname=$(whoami)
+mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+
+echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
+
+cat /etc/bandit_pass/$myname > /tmp/$mytarget
+bandit22@bandit:~$ cat /tmp/$mytarget
+cat: /tmp/: Permission denied
+bandit22@bandit:~$ mkdir /tmp/rr
+bandit22@bandit:~$ cd /tmp/rr
+bandit22@bandit:/tmp/rr$ nano rr.sh
+
+bandit22@bandit:/tmp/rr$ chmod 777 rr.sh 
+bandit22@bandit:/tmp/rr$ ./rr.sh 
+Copying passwordfile /etc/bandit_pass/bandit22 to /tmp/8169b67bd894ddbb4412f91573b38db3
+bandit22@bandit:/tmp/rr$ cat /tmp/8169b67bd894ddbb4412f91573b38db3
+OZf11i0IjMVN551jX3CmStKLYqjk54Ga
+
+flag : OZf11i0IjMVN551jX3CmStKLYqjk54Ga
+
+-------------------------------------------------------------------------------------------------------------
+
+# LEVEL 23 --> LEVEL 24
+
+A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+NOTE: This level requires you to create your own first shell-script. This is a very big step and you should be proud of yourself when you beat this level!
+
+
+
+ 
 
 
 
