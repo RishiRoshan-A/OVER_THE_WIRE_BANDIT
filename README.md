@@ -491,7 +491,7 @@ A program is running automatically at regular intervals from cron, the time-base
 
 NOTE: Looking at shell scripts written by other people is a very useful skill. The script for this level is intentionally made easy to read. If you are having problems understanding what it does, try executing it to see the debug information it prints.
 
-command to login : ssh  bandit21@bandit.labs.overthewire.org -p 2220 
+command to login : ssh  bandit22@bandit.labs.overthewire.org -p 2220 
 
 and enter the previous flag as the password 
 
@@ -530,10 +530,238 @@ A program is running automatically at regular intervals from cron, the time-base
 
 NOTE: This level requires you to create your own first shell-script. This is a very big step and you should be proud of yourself when you beat this level!
 
+command to login : ssh  bandit23@bandit.labs.overthewire.org -p 2220 
+
+and enter the previous flag as the password 
+
+lets ran cd /etc/cron.d and used the ls command to check the files in the current directory.
+we found a file named cronjob_bandit24, so lets enter cat cronjob_bandit24 to read it.
+The file indicated that a cronjob excutes a script called cronjob_bandit24.sh.
+By the way, the ***** format represents the cron schedule: miniute, hour, day of month, month, day of week, respectively.
+lets use cat again to read the 'cronjob_bandit24.sh file.
+From the script, we learn that it executes and deletes all files in a specific specific directory---in this case, /var/spool/bandit24/foo`.
+
+command : echo "cat /etc/bandit_pass/bandit24 > /tmp/passwd24" > rr.sh
+
+Then, Lets and changed permissions of rr.sh to 777 using chmod, so the cronjob could execute it.
+we confirmed the permission using ls -l, then waited. Eventually, rr.sh was deleted by the cronjob, and passwd24 appeared int the /tmp directory.
+Finally, the passwd24 file was appeared, and we successfully got the password for the next level by reading it.
+
+flag : gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8
+
+-------------------------------------------------------------------------------------------------------------
+
+# LEVEL 24 --> LEVEL 25 
+
+A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations, called brute-forcing.
+You do not need to create new connections each time
 
 
+ command to login : ssh  bandit24@bandit.labs.overthewire.org -p 2220 
+
+and enter the previous flag as the password 
+
+It was obvious that I had to write code that automatically submits this level's password along with all possible 4-digit pincodes.
+So, lets run mkdir /tmp/rr to make a working directory, and moved into it.
+
+Then I create a Python script rr.py 
+
+!/usr/bin/python3
+for i in range(10000):
+a = "gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8 "
+b = f"{i:04d}"
+print(a+b)
+
+since we  got a "permission denied" error.
+
+So, lets changed permissions of the rr.py script using chmod. 
+
+So lets run ./auto.py | nc localhost 30002 to find the flag
+
+flag : iCi86ttT4KSNe1armKiwbQNmB3YJP3q4
+
+-------------------------------------------------------------------------------------------------------------
+
+# LEVEL 25 --> LEVEL 26 
+
+Logging in to bandit26 from bandit25 should be fairly easy… The shell for user bandit26 is not /bin/bash, but something else. Find out what it is, how it works and how to break out of it.
+
+command to login : ssh  bandit25@bandit.labs.overthewire.org -p 2220 
+
+and enter the previous flag as the password 
+
+lets type ls to check the files in the current directory.
+
+we found the bandit26.sshkey file and used the cat command to view its contents.
+
+we found a private key, so lets run ssh -i bandit26.sshkey bandit26@localhost -p 2220 to try logging into bandit26.
+
+The bandit system asked me to confirm the connection, and typed yes. Unfortunately, the connection closed immediately after.
+
+To find out what shell bandit26 uses, I ran cat /etc/passwd | grep bandit26.
+
+The result showed that the shell is a script called showtext.
+
+I used the cat command to read it, and I found that it runs the more command.
+
+The more command similar to cat, but it only displays one screen at a time.
+I realized that if the bandit program can not shows full contents at once, the disconnection wouldn't be happen.
+
+So lets run ssh -i bandit26.sshkey bandit26@localhost -p 2220 again and adjusted the terminal screen size much smaller than before. Then entered yes.
+
+It worked! The connection was fine.
+Next, I pressed v to enter vi editor mode. And then, I ran :set shell=/bin/bash to set the shell to bash.
+After that, I entered :sh to open a shell temporarily without closing the vi editor.
+
+Finally, I logged in Level 26, and got the password for Level 26 using `cat /etc/bandit_pass/bandit26'.
+
+flag : s0773xxkk0MXfdqOfPRVr9L3jJBUOgCZ
+
+------------------------------------------------------------------------------------------------------------
+
+# LEVEL 26 --> LEVEL 27
+
+Good job getting a shell! Now hurry and grab the password for bandit27!
+
+command to login : ssh  bandit26@bandit.labs.overthewire.org -p 2220 
+
+and enter the previous flag as the password 
+
+lets type ls to see the files
+
+we got an executable file lets try to excute it
+
+command : ./bandit27-do 
+
+command : ./bandit27-do cat /etc/bandit_pass/bandit27
+
+to see the flag
+
+flag : upsNCc7vzaRDx6oZC6GiR6ERwe1MowGB
+
+-------------------------------------------------------------------------------------------------------------
+
+# LEVEL 27 --> LEVEL 28
+
+There is a git repository at ssh://bandit27-git@bandit.labs.overthewire.org/home/bandit27-git/repo via the port 2220. The password for the user bandit27-git is the same as for the user bandit27.
+
+Clone the repository and find the password for the next level.
+
+
+ command to login : ssh  bandit27@bandit.labs.overthewire.org -p 2220 
+
+and enter the previous flag as the password 
+
+Lets create a directory under tmp and clone the git repo
+
+bandit27@bandit:~$ mkdir /tmp/rrr
+bandit27@bandit:~$ cd /tmp/rrr
+
+to clone a git repo command : git clone <repo_name>git clone ssh://bandit27-
+
+command : git@bandit.labs.overthewire.org:2220/home/bandit27-git/repo
+
+we got a directory named repo lets go inside it 
+
+we can see a file called README 
+
+commad : cat README  this revels the flag 
+
+flag : Yz9IpL0sBcCeuG7m9uQFt8ZNpS4HZRcN
+
+-------------------------------------------------------------------------------------------------------------
+
+# LEVEL 28 --> LEVEL 29
+
+
+There is a git repository at ssh://bandit28-git@bandit.labs.overthewire.org/home/bandit28-git/repo via the port 2220. The password for the user bandit28-git is the same as for the user bandit28.
+
+Clone the repository and find the password for the next level.
+
+command to login : ssh  bandit28@bandit.labs.overthewire.org -p 2220 
+
+and enter the previous flag as the password 
+
+create a directory under tmp 
+clone the repo using git clone
+
+bandit28@bandit:/tmp/r$ git clone ssh://bandit28-git@localhost/home/bandit28-git/repo
+Cloning into 'repo'...
+
+there is a folder called repo  and there is a README.md file lets cat that 
+
+bandit28@bandit:/tmp/r/repo$ cat README.md
+
+
+## credentials
+
+- username: bandit29
+- password: xxxxxxxxxx
+
+lets check the git log : command : git log 
+
+command : git checkout <commit_id>
+
+So lets checked out the commit using git checkout command, and then re-read the README.md file with cat.
+Finally, we successfully obtained the flag
+
+flag : 4pT1t5DENaYuqnqvadYs1oE4QLCdjmJ7
+
+-------------------------------------------------------------------------------------------------------------
+
+# LEVEL 29 --> LEVEL 30 
+
+There is a git repository at ssh://bandit29-git@bandit.labs.overthewire.org/home/bandit29-git/repo via the port 2220. The password for the user bandit29-git is the same as for the user bandit29.
+
+Clone the repository and find the password for the next level.
+
+command to login : ssh  bandit29@bandit.labs.overthewire.org -p 2220 
+
+and enter the previous flag as the password 
+
+lets create a new directory and clone the git repo
+
+bandit29@bandit:~$ cd /tmp/rishi
+bandit29@bandit:/tmp/rishi$ git clone ssh://bandit29-git@localhost/home/bandit29-git/repo
+Cloning into 'repo'...
+
+ lets type ls to check the contents and then found a directory named repo.
  
+lets moved into it using cd and ran ls again. There was a file named README.md, and lets read it using cat.
 
+It seemed like the file had included the password for the next level before someone edited it.
 
+we used the git log command to check the commit history of the file, but we couldn't find any useful clues.
+
+so lets try for git branches
+
+bandit29@bandit:/tmp/rishi$ git branch -r 
+  origin/HEAD -> origin/master
+  origin/dev
+  origin/master
+  origin/sploits-dev
+
+lets checkout dev
+
+bandit29@bandit:/tmp/rishi$ git checkout dev
+Branch dev set up to track remote branch dev from origin.
+Switched to a new branch 'dev'
+
+now lets check our README.md file
+
+bandit29@bandit:/tmp/rishi$ ls
+code  README.md
+bandit29@bandit:/tmp/rishi$ cat README.md
+# Bandit Notes
+Some notes for bandit30 of bandit.
+
+## credentials
+
+- username: bandit30
+- password: qp30ex3VLz5MDG1n91YowTv4Q8l7CDZL
+
+flag : qp30ex3VLz5MDG1n91YowTv4Q8l7CDZL
+
+------------------------------------------------------------------------------------------------------------
 
 
